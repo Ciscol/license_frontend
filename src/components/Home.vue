@@ -1,13 +1,11 @@
 <template>
   <div>
-    <p>Home page</p>
-    <p>Random number from backend: {{ randomNumber }}</p>
+    <p>HOME PAGE</p>
+    <p>NETWORK TEST: Random number from backend: {{ randomNumber }}</p>
     <button @click="getRandom">New random number</button>
   </div>
 </template>
 <script>
-import axios from "axios";
-
 export default {
   data() {
     return {
@@ -19,15 +17,24 @@ export default {
       this.randomNumber = this.getRandomFromBackend();
     },
     getRandomFromBackend() {
-      const path = `http://localhost:5000/api/random`;
-      axios
-        .get(path)
+      this.$http
+        .get('random')
         .then(response => {
           this.randomNumber = response.data.randomNumber;
         })
         .catch(error => {
           console.log(error);
         });
+    }
+  },
+  beforeMount() {
+    let token = localStorage.getItem('license-verification-Authorization');
+    if (!token) {
+      this.$router.push('/verify');
+    }
+    else {
+      // checkToken();
+
     }
   },
   created() {

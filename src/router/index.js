@@ -3,8 +3,9 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 const routerOptions = [
-  { path: '/', component: 'Home' },
-  { path: '/about', component: 'About' },
+  { path: '/', redirect: 'Home' },
+  { path: '/home', component: 'Home' },
+  { path: '/verify', component: 'Verify' },
   { path: '*', component: 'NotFound' }
 ]
 
