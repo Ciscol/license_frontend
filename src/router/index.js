@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import http from '../http'
 Vue.use(Router)
 
 const routerOptions = [
-  { path: '/', redirect: 'Home' },
+  { path: '/', redirect: 'home' },
   { path: '/home', component: 'Home' },
-  { path: '/verify', component: 'Verify' },
+  { path: '/verify', component: 'Verify', meta: { isPublic: true } },
   { path: '*', component: 'NotFound' }
 ]
 
@@ -16,7 +17,30 @@ const routes = routerOptions.map(route => {
   }
 })
 
-export default new Router({
+const router = new Router({
   routes,
   mode: 'history'
 })
+
+/* 路由监听，检查token是否存在 */
+router.beforeEach((to, from, next) => {
+  let token = localStorage.getItem("license-verification-Authorization");
+  if (!to.meta.isPublic) {
+    if (!token) {
+      return next('/verify');
+    }
+    http
+      .get('authCheck')
+      .then(response => {
+        if (response.data.code === 4101) {
+          return next('/verify');
+        }
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+  next();
+})
+export default router;

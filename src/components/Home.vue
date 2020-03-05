@@ -14,7 +14,7 @@ export default {
   },
   methods: {
     getRandom() {
-      this.randomNumber = this.getRandomFromBackend();
+      this.getRandomFromBackend();
     },
     getRandomFromBackend() {
       this.$http
@@ -25,16 +25,6 @@ export default {
         .catch(error => {
           console.log(error);
         });
-    }
-  },
-  beforeMount() {
-    let token = localStorage.getItem('license-verification-Authorization');
-    if (!token) {
-      this.$router.push('/verify');
-    }
-    else {
-      // checkToken();
-
     }
   },
   created() {

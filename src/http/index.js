@@ -11,8 +11,8 @@ const http = axios.create({
 http.interceptors.request.use(config => {
   let token = localStorage.getItem('license-verification-Authorization');
   if (token) {
-    config.headers.Authorization = 'Bearer ' + token;
-    // config.headers.Authorization = 'Bearer ' + 'dd' + token;
+    config.headers.Authorization = token;
+    // config.headers.Authorization = 'Bearer ' + token;
   }
   return config;
 }, err => {
