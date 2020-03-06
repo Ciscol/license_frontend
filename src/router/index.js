@@ -31,13 +31,10 @@ router.beforeEach((to, from, next) => {
     }
     http
       .get('authCheck')
-      .then(response => {
-        if (response.data.code === 4101) {
+      .catch(error => {
+        if (error && error.response && error.response.status === 401) {
           return next('/verify');
         }
-        console.log(response);
-      })
-      .catch(error => {
         console.log(error);
       });
   }
