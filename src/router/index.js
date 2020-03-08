@@ -31,6 +31,9 @@ router.beforeEach((to, from, next) => {
     }
     http
       .get('authCheck')
+      .then(() => {
+        next();
+      })
       .catch(error => {
         if (error && error.response && error.response.status === 401) {
           return next('/verify');
@@ -38,6 +41,8 @@ router.beforeEach((to, from, next) => {
         console.log(error);
       });
   }
-  next();
+  else {
+    next();
+  }
 })
 export default router;
