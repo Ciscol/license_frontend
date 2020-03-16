@@ -5,15 +5,16 @@ Vue.use(Router)
 
 const routerOptions = [
   { path: '/', redirect: 'home' },
-  { path: '/home', component: 'Home' },
-  { path: '/verify', component: 'Verify', meta: { isPublic: true } },
-  { path: '*', component: 'NotFound' }
+  { path: '/home', component: 'Home', meta: { title: 'HOME' } },
+  { path: '/verify', component: 'Verify', meta: { isPublic: true, title: 'VERIFY' } },
+  { path: '/generate', component: 'Generate', meta: { isPublic: true, title: 'GENERATE' } },
+  { path: '*', component: 'NotFound', meta: { title: 'NotFound' } }
 ]
 
 const routes = routerOptions.map(route => {
   return {
     ...route,
-    component: () => import(`@/components/${route.component}.vue`)
+    component: () => import(`@/components/${route.component}`)
   }
 })
 
@@ -22,8 +23,12 @@ const router = new Router({
   mode: 'history'
 })
 
-/* 路由监听，检查token是否存在 */
+/* 路由监听 */
 router.beforeEach((to, from, next) => {
+  if (to.meta.title) {
+    document.title = to.meta.title;
+  }
+  /* 检查token是否存在 */
   let token = localStorage.getItem("license-verification-Authorization");
   if (!to.meta.isPublic) {
     if (!token) {

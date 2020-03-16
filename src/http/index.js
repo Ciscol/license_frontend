@@ -24,20 +24,22 @@ http.interceptors.response.use(res => {
   return res;
 }, err => {
   // 错误信息弹出
-    if (err.response.data && err.response.data.message) {
+  console.log(err);
+  if (err.response.data && err.response.data.message) {
     alert(err.response.data.message)
-    
+
     // element 用到的
     // Vue.prototype.$message({
     //   type: 'error',
     //   message: err.response.data.message
     // })
-    }
-    if (err.response.status === 401) {
-      alert('401 (UNAUTHORIZED)')
-      router.push('/verify');
-      return;
-    }
+  }
+  if (err.response.status === 401) {
+    // alert('401 (UNAUTHORIZED)')
+    localStorage.removeItem('license-verification-Authorization');
+    router.push('/verify');
+    return Promise.reject(err);
+  }
   // 登录失败，跳转到登录页
   // if (err.response.status === 401) {
   //   router.push('/login');
