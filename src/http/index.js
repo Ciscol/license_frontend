@@ -1,5 +1,5 @@
 import axios from 'axios'
-// import Vue from 'vue'
+import Vue from 'vue'
 import router from '../router'
 
 const http = axios.create({
@@ -24,28 +24,23 @@ http.interceptors.response.use(res => {
   return res;
 }, err => {
   // 错误信息弹出
-  console.log(err);
   if (err.response.data && err.response.data.message) {
-    alert(err.response.data.message)
-
-    // element 用到的
-    // Vue.prototype.$message({
-    //   type: 'error',
-    //   message: err.response.data.message
-    // })
-  }
-  if (err.response.status === 401) {
-    // alert('401 (UNAUTHORIZED)')
-    localStorage.removeItem('license-verification-Authorization');
-    router.push('/verify');
-    return Promise.reject(err);
+    Vue.prototype.$alert(err.response.data.message, 'ERROR', {
+      confirmButtonText: '确定'
+    });
   }
   // 登录失败，跳转到登录页
-  // if (err.response.status === 401) {
-  //   router.push('/login');
-  // }
+  if (err.response.status === 401) {
+    localStorage.removeItem('license-verification-Authorization');
+    Vue.prototype.$message({
+      showClose: true,
+      message: '登录失效，即将跳转至登录页面',
+      type: 'error'
+    });
+    setTimeout(() => {
+      router.push('/verify');
+    }, 3000)
+  }
   return Promise.reject(err);
 })
-
-
 export default http;

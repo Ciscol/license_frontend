@@ -43,7 +43,6 @@ router.beforeEach((to, from, next) => {
         if (error && error.response && error.response.status === 401) {
           return next('/verify');
         }
-        console.log(error);
       });
   }
   else {

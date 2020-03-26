@@ -18,7 +18,7 @@
           </el-checkbox-group>
         </el-form-item>
         <el-form-item>
-          <el-button @click="generate">点击生成</el-button>
+          <el-button @click="generate" type="primary" round>点击生成</el-button>
         </el-form-item>
       </el-form>
     </el-main>
@@ -59,7 +59,10 @@ export default {
 }
 .el-form{
   text-align: left;
-  width: 30%;
+  width: 500px;
   margin: auto;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
 }
 </style>

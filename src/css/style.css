@@ -1,15 +1,25 @@
-.el-header,
+.el-header {
+  background-color: #B3C0D1;
+  color: black;
+  font-size: 40px;
+  line-height: 100px;
+  text-align: center;
+  height: 100px !important;
+}
+
 .el-footer {
   background-color: #B3C0D1;
   color: #333;
   text-align: center;
   line-height: 60px;
+  font-size: 20px;
 }
 
 .el-main {
   background-color: #E9EEF3;
   color: #333;
   text-align: center;
+  height: 500px;
 }
 
 body>.el-container {
