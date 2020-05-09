@@ -39,7 +39,7 @@ http.interceptors.response.use(res => {
     });
     setTimeout(() => {
       router.push('/verify');
-    }, 3000)
+    }, 1000)
   }
   return Promise.reject(err);
 })

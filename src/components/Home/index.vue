@@ -26,6 +26,7 @@
           <p>模块{{item}} 模块{{item}} 模块{{item}}</p>
         </el-tab-pane>
       </el-tabs>
+      <el-button class="logout" @click="logout">退出登陆</el-button>
     </el-main>
     <el-footer>项目的功能主页，展示了license有效期，并演示了功能模块的部分开放</el-footer>
   </el-container>
@@ -95,6 +96,10 @@ export default {
         .finally(() => {
           this.gettingRandom = false;
         });
+    },
+    logout() {
+      localStorage.removeItem("license-verification-Authorization");
+      this.$router.push("/verify");
     }
   },
   created() {
@@ -110,8 +115,11 @@ export default {
   color: aliceblue;
 }
 .get-random {
-  height: 120px;
-  width: 120px;
+  height: 100px;
+  width: 100px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+}
+.logout {
+  margin-top: 20px;
 }
 </style>
